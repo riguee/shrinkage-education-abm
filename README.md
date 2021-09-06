@@ -20,3 +20,6 @@ The ABM analysis will also include GIS elements. To do so, the library geo-mesa,
 # models
 
 The model was ran as is, then changes were made to the initialisation values to obtain 3 different simulations: new schools were placed in zip codes with no schools, the school scores of the lowest performing schools were increased, and the budget of the poorer families with children was updated to simulation scholarships and remove education related costs. 
+
+
+A more detailed description and the input data folders can be found at the following link: https://drive.google.com/drive/folders/1n776OWlGaCtfMD6c2Rda_ccZTDjXZHIK?usp=sharing
