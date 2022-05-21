@@ -24,7 +24,7 @@ residents. Shrinking areas are thus less likely to become areas of entrepreneurs
 associated informal residents and increased crime rates have brought an unfavourable image of shrinking areas for residents and the global public alike.
 
 ## Data Sources
-The data files are taken from the American Community Survey (ACS) through the census data API and the censusdata library (https://pypi.org/project/CensusData/). The school data was imported from the Detroit Public SchoolsCommunity District, and scoring considered in the analysis is the Michigan Index.
+The data files are taken from the American Community Survey (ACS) through the census data API and the [censusdata library](https://pypi.org/project/CensusData/). The school data was imported from the Detroit Public SchoolsCommunity District, and scoring considered in the analysis is the Michigan Index.
 
 The ABM analysis will also include GIS elements. To do so, the library geo-mesa, which builds on the mesa library adding geographical features such as geometry of the agents, was used. Moreover the model is not completely dynamic as there is no influx of new people to the city, only individuals moving within Detroit and, eventually, leaving (shrinkage).
 
