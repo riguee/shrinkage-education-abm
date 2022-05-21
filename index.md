@@ -1,37 +1,49 @@
-## Welcome to GitHub Pages
+# education-focused Agent Based Model of shrinkage in Detroit
 
-You can use the [editor on GitHub](https://github.com/riguee/shrinkage-education-abm/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+ABM model looking at population decrease in Detroit, focusing specifically on the effect of education and schools.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Introduction
+### What are shrinking cities; and why should we care?
+Shrinking cities are “areas that over the past 40–50 years have experienced population loss, employment decline or/and protracted economic downturn until very recently” [Reckien and Martinez-Fernandez 2011](https://www.researchgate.net/publication/232904116_Why_Do_Cities_Shrink). Although the time frame and population
+loss considered are variable, this definition highlights the distinction between daily demographic, and ‘transformational’ change, which happens at a larger scale both
+spatially and temporally. Shrinking cities are not homogeneous and they are not necessarily exclusive from growth, thus making the patterns harder to study and understand.
 
-### Markdown
+Shrinkage appears as an interplay of many factors from different scales (regional, national, global) that can be related to economic, demographic, spatial, political or administrative changes (Haase et al. 2016). In the western world, several factors are generally linked to shrinkage:
+- Deindustrialisation and the switch to third sector activities that have led to an increase in unemployment and outmigrations;
+- Political, such as governmental failure at addressing social issues and corruption; 
+- General demographic trends of decline are also identified as a root for shrinkage, and mark a global trend of the developed world towards emptying of cities;
+- Lastly, environmental issues, armed conflicts or natural disasters can also force outmigration and cause shrinkage.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
-```markdown
-Syntax highlighted code block
+Many consequences of shrinkage appear and impact the urban fabric, the economic activity, and the life of urban dwellers. Hospers (2012) identifies three distinct
+consequences to shrinkage: 
+- on the tangible features of a city - the **“hardware”**, seen through the emptying of buildigns and the bankruptcies of businesses.
+- the social norms of remaining residents - **“software”**: as out-migrations are mostly available to the young, skilled and wealthy, the residents left behind are often poorer and older. This, associated with the diminished economic activity, impacts the prospects of upward mobility for the
+residents. Shrinking areas are thus less likely to become areas of entrepreneurship and innovation.
+- lastly, the perception of the shrinking area in the eyes of the global population - **“mindware”**: as the decay and abandonment of buildings and the
+associated informal residents and increased crime rates have brought an unfavourable image of shrinking areas for residents and the global public alike.
 
-# Header 1
-## Header 2
-### Header 3
+## Data Sources
+The data files are taken from the American Community Survey (ACS) through the census data API and the censusdata library (https://pypi.org/project/CensusData/). The school data was imported from the Detroit Public SchoolsCommunity District, and scoring considered in the analysis is the Michigan Index.
 
-- Bulleted
-- List
+The ABM analysis will also include GIS elements. To do so, the library geo-mesa, which builds on the mesa library adding geographical features such as geometry of the agents, was used. Moreover the model is not completely dynamic as there is no influx of new people to the city, only individuals moving within Detroit and, eventually, leaving (shrinkage).
 
-1. Numbered
-2. List
+## Model
+### Agents initialisation:
+1. Zip: each zip area is defined as an agent, with its associated area taken from official shapefiles. They also contain information about the number of households, schools, vacant houses they contained, as well as ethnic and family characteristics of households. 
+2. Schools: their shape was defined as a point at their official address. All available information about the schools were added to the agents. 
+3. Households: each household was initialised at a random point within their assigned zip code. The first features added were family status and size, generated to match direct counts over the zips. From the family status and household size, the presence of children was computed (1 − P(notchild|f amilystatus) (householdsize)). Conditioning on the family status, the ethnicity and tenure type (renter or owner) were drawn, from the computed percentages of these attributes conditioned on family types in the official census data. Income was added the same way by conditioning on household ethnicity. Finally, monthly spending on housing was drawn conditioning on tenure and income. This result was available as a percentage of monthly income, and then turned as a dollar value.
+4. Houses had two availability statuses: as households are initialised, the associated house is generated, with availability set to false. Once all households are initialised, the vacant ones are generated by drawing random points in their assigned zip. The house cost is computed by averaging the housing related spending of neighbouring occupied houses.
 
-**Bold** and _Italic_ and `Code` text
+![dependency graph](https://github.com/riguee/shrinkage-education-abm/blob/main/Dependency%20graph.png)
 
-[Link](url) and ![Image](src)
-```
 
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+### Decision rule
+![step_flowchart](https://github.com/riguee/shrinkage-education-abm/blob/main/Flowchart.png)
 
-### Jekyll Themes
+models
+The model was ran as is, then changes were made to the initialisation values to obtain 3 different simulations: new schools were placed in zip codes with no schools, the school scores of the lowest performing schools were increased, and the budget of the poorer families with children was updated to simulation scholarships and remove education related costs.
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/riguee/shrinkage-education-abm/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+A more detailed description and the input data folders can be found [here](https://drive.google.com/drive/folders/1n776OWlGaCtfMD6c2Rda_ccZTDjXZHIK?usp=sharing)
 
-### Support or Contact
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
